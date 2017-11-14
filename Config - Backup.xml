@@ -1,0 +1,491 @@
+<TsGui>
+	<Height>350</Height>
+	<Width>610</Width>
+	<!--<ShowGridLines/>-->
+	<HardwareEval />
+	
+	<Heading>
+		<Title>TGP</Title>
+		<Text>Windows 10 Task Sequence Options</Text>
+	</Heading>
+
+	<Page>
+	
+		<Column>
+		
+				<Formatting>
+					<LeftCellWidth>110</LeftCellWidth>
+					<RightCellWidth>160</RightCellWidth>
+				</Formatting>
+				
+				<GuiOption Type="Heading">
+					<Label>Machine Config </Label>
+					<Bold/>
+				</GuiOption>
+				
+				<GuiOption Type="ComputerName">
+					<Validation ValidateEmpty="FALSE">
+											
+						<Message>Min 7, Max 15 Characters, and cannot contain `~!@#$%^*()</Message>			
+						<MaxLength>15</MaxLength>
+						<MinLength>7</MinLength>
+						
+						<Invalid>
+							<Rule Type="Characters">`~!@#$%^*()</Rule>													
+						</Invalid>
+						
+					</Validation>
+				</GuiOption>
+				
+				<GuiOption Type="FreeText">
+					<Variable>OSDUserName</Variable>
+					<Label>User Name:</Label>
+					<SetValue>
+						<Value>Jane Doe</Value>
+					</SetValue>
+					<HelpText>Enter the user to be using this device</HelpText>
+				</GuiOption>
+				
+				<GuiOption Type="DropDownList">
+					<Variable>OSDComputerDescription</Variable>
+					<Label>Model:</Label>
+					<SetValue>
+						<Value>Dell Latitude 5289 Win10, Bitlocker</Value>
+					</SetValue>
+					<Option>
+						<Text>Dell Latitude 5289</Text>
+						<Value>Dell Latitude 5289 Win10, Bitlocker</Value>
+					</Option>
+					<Option>
+						<Text>Surface Pro 4</Text>
+						<Value>Surface Pro 4 Win10, Bitlocker</Value>
+					</Option>
+					<Option>
+						<Text>Surface Pro 3</Text>
+						<Value>Surface Pro 3 Win10, Bitlocker</Value>
+					</Option>
+					<Option>
+						<Text>HP Elitebook 820 G1</Text>
+						<Value>HP Elitebook 820 G1 Win10, Bitlocker</Value>
+					</Option>
+					<Option>
+						<Text>HP Elitebook 820 G2</Text>
+						<Value>HP Elitebook 820 G2 Win10, Bitlocker</Value>
+					</Option>
+					<Option>
+						<Text>HP Elitebook 820 G3</Text>
+						<Value>HP Elitebook 820 G3 Win10, Bitlocker</Value>
+					</Option>
+					<Option>
+						<Text>HP Elitebook 2570p</Text>
+						<Value>HP Elitebook 2570p Win10, Bitlocker</Value>
+					</Option>
+
+					
+				</GuiOption>	
+				
+				<GuiOption Type="DropDownList" ID="source_department">
+					<Variable>OSDTeam</Variable>
+					<Label>User:</Label>
+					<SetValue>
+						<Value>TGP User</Value>
+					</SetValue>
+					<Option>
+						<Text>TGP User</Text>
+						<Value>GENTGP</Value>
+					</Option>
+					<Option>
+						<Text>Wulvern User</Text>
+						<Value>GENWUL</Value>
+					</Option>
+					<Option>
+						<Text>Mobile Worker</Text>
+						<Value>MOBILE</Value>
+					</Option>
+					<Option>
+						<Text>IT User</Text>
+						<Value>IT</Value>
+					</Option>
+					<Option>
+						<Text>Director</Text>
+						<Value>Director</Value>
+					</Option>		
+				</GuiOption>	
+				
+		</Column>
+		
+		<Column>
+		
+				<Formatting>
+					<LeftCellWidth>110</LeftCellWidth>
+					<RightCellWidth>170</RightCellWidth>
+				</Formatting>
+				
+				<GuiOption Type="Heading">
+					<Label>System readiness </Label>
+					<Bold/>
+				</GuiOption>
+				
+			<!-- Option to check whether the device is connected to power -->
+				<GuiOption Type="TrafficLight">
+					<Variable>Compliance_PowerStatus</Variable>
+					<Label>Power connection</Label>
+					<ShowComplianceValue>FALSE</ShowComplianceValue>
+					<SetValue>
+						<Query Type="Wmi">
+							<Wql>SELECT BatteryStatus FROM Win32_Battery</Wql>
+							<Property Name="BatteryStatus"/>	
+							<Separator></Separator>
+						</Query>
+					</SetValue>
+					<Compliance>
+						<Message>Please connect the power</Message>		
+						<DefaultState>Warning</DefaultState>
+						<OK>
+							<Rule Type="Contains">2</Rule>
+							<Rule Type="Equals">*NULL</Rule>
+						</OK>
+					</Compliance>
+				</GuiOption>
+						
+				<GuiOption Type="Heading"/>
+				<GuiOption Type="ComplianceRefreshButton">
+					<Formatting>
+						<LeftCellWidth>110</LeftCellWidth>
+						<RightCellWidth>160</RightCellWidth>
+						<Control>
+							<HorizontalAlignment>left</HorizontalAlignment>
+						</Control>
+						
+					</Formatting>
+					<HAlign>right</HAlign>
+				</GuiOption>
+				
+			</Column>
+		
+	</Page>		
+				
+				<Page>
+	
+		<Column>
+		
+				<Formatting>
+					<LeftCellWidth>160</LeftCellWidth>
+					<RightCellWidth>160</RightCellWidth>
+				</Formatting>
+
+				<GuiOption Type="Heading">
+					<Label>Core Applications</Label>
+					<Bold/>
+				</GuiOption>	
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_Unify</Variable>
+					<Label>Unify Openscape</Label>
+					<HAlign>center</HAlign>
+					<Value>TRUE</Value>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">GENTGP</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>
+				
+				<GuiOption Type="Heading">
+					<Label>Business Applications</Label>
+					<Bold/>
+				</GuiOption>	
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_BoardPad</Variable>
+					<Label>BoardPad</Label>
+					<HAlign>center</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">Director</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>
+
+				<GuiOption Type="CheckBox">
+					<Variable>APP_CDPEasyPost</Variable>
+					<Label>CDP EasyPost</Label>
+					<HAlign>center</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">MOBILE</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>
+
+				<GuiOption Type="CheckBox">
+					<Variable>APP_SwordfishDoc</Variable>
+					<Label>Swordfish Document Import</Label>
+					<HAlign>center</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">MOBILE</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>					
+							
+				
+		</Column>
+		
+		<Column>
+		
+				<Formatting>
+					<Width>360</Width>
+					<LeftCellWidth>190</LeftCellWidth>
+					<RightCellWidth>40</RightCellWidth>
+				</Formatting>
+
+				<GuiOption Type="Heading">
+					<Label>IT Applications</Label>
+					<Bold/>
+				</GuiOption>	
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_SQL</Variable>
+					<Label>SQL Management Studio</Label>
+					<HAlign>right</HAlign>
+					<Value>TRUE</Value>
+				</GuiOption>
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_CMSupport</Variable>
+					<Label>CM Support Center</Label>
+					<HAlign>right</HAlign>
+					<Value>TRUE</Value>
+				</GuiOption>
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_SCCMConsole</Variable>
+					<Label>SCCM Console</Label>
+					<HAlign>right</HAlign>
+					<Value>TRUE</Value>
+				</GuiOption>
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_ADPhoto</Variable>
+					<Label>AD Photo Editor</Label>
+					<HAlign>right</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">IT</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>
+				
+				<GuiOption Type="CheckBox">
+					<Variable>App_AppsenseEnvironment</Variable>
+					<Label>Appsense Environment Console</Label>
+					<HAlign>right</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">IT</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>
+				
+				<GuiOption Type="CheckBox">
+					<Variable>App_RSAT</Variable>
+					<Label>Remote Server Administration Tools</Label>
+					<HAlign>right</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">IT</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_XenApp</Variable>
+					<Label>Citrix XenApp Console</Label>
+					<HAlign>right</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">IT</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>			
+
+				<GuiOption Type="CheckBox">
+					<Variable>APP_NotepadPlus</Variable>
+					<Label>Notepad ++</Label>
+					<HAlign>right</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">IT</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>	
+
+				<GuiOption Type="CheckBox">
+					<Variable>APP_mRemote</Variable>
+					<Label>mRemote NG</Label>
+					<HAlign>right</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">IT</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
+				</GuiOption>			
+							
+				
+		</Column>
+		
+	</Page>
+	
+
+</TsGui>
