@@ -96,6 +96,10 @@
 						<Text>HP Compaq Pro 6300 SFF</Text>
 						<Value>HP Compaq Pro 6300 SFF Win10 - </Value>
 					</Option>
+					<Option>
+						<Text>HyperV Test Machine</Text>
+						<Value>HyperV Test Machine Win10 - </Value>
+					</Option>
 
 					
 				</GuiOption>	
