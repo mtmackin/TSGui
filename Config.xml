@@ -215,6 +215,16 @@
 								<Ruleset Type="OR">
 									<Rule Type="Equals">GENTGP</Rule>
 								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
 								<Ruleset Type="OR">
 									<Rule Type="Equals">MOBILE</Rule>
 								</Ruleset>
