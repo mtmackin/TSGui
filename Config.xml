@@ -215,6 +215,9 @@
 								<Ruleset Type="OR">
 									<Rule Type="Equals">GENTGP</Rule>
 								</Ruleset>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">MOBILE</Rule>
+								</Ruleset>
 								<Result>
 									<Value>TRUE</Value>
 								</Result>
