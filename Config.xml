@@ -320,6 +320,32 @@
 							</Else>
 						</Query>
 					</SetValue>
+				</GuiOption>	
+				
+				<GuiOption Type="CheckBox">
+					<Variable>APP_iAuditor</Variable>
+					<Label>iAuditor</Label>
+					<HAlign>center</HAlign>
+					<SetValue>
+						<Query Type="IfElse">
+							<IF>
+								<Source>
+									<Query Type="OptionValue">
+										<ID Name="source_department"/>
+									</Query>
+								</Source>
+								<Ruleset Type="OR">
+									<Rule Type="Equals">MOBILE</Rule>
+								</Ruleset>
+								<Result>
+									<Value>TRUE</Value>
+								</Result>
+							</IF>
+							<Else>
+								<Value>FALSE</Value>
+							</Else>
+						</Query>
+					</SetValue>
 				</GuiOption>					
 							
 				
