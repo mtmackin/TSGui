@@ -108,8 +108,12 @@
 					<Variable>OSDTeam</Variable>
 					<Label>User:</Label>
 					<SetValue>
-						<Value>TGP User</Value>
+						<Value>Mobile Worker</Value>
 					</SetValue>
+					<Option>
+						<Text>Mobile Worker</Text>
+						<Value>MOBILE</Value>
+					</Option>
 					<Option>
 						<Text>TGP User</Text>
 						<Value>GENTGP</Value>
@@ -117,11 +121,7 @@
 					<Option>
 						<Text>Wulvern User</Text>
 						<Value>GENWUL</Value>
-					</Option>
-					<Option>
-						<Text>Mobile Worker</Text>
-						<Value>MOBILE</Value>
-					</Option>
+					</Option>					
 					<Option>
 						<Text>IT User</Text>
 						<Value>IT</Value>
@@ -299,32 +299,6 @@
 				<GuiOption Type="CheckBox">
 					<Variable>APP_SwordfishDoc</Variable>
 					<Label>Swordfish Document Import</Label>
-					<HAlign>center</HAlign>
-					<SetValue>
-						<Query Type="IfElse">
-							<IF>
-								<Source>
-									<Query Type="OptionValue">
-										<ID Name="source_department"/>
-									</Query>
-								</Source>
-								<Ruleset Type="OR">
-									<Rule Type="Equals">MOBILE</Rule>
-								</Ruleset>
-								<Result>
-									<Value>TRUE</Value>
-								</Result>
-							</IF>
-							<Else>
-								<Value>FALSE</Value>
-							</Else>
-						</Query>
-					</SetValue>
-				</GuiOption>	
-				
-				<GuiOption Type="CheckBox">
-					<Variable>APP_iAuditor</Variable>
-					<Label>iAuditor</Label>
 					<HAlign>center</HAlign>
 					<SetValue>
 						<Query Type="IfElse">
